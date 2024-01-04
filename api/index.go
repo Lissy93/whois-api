@@ -3,34 +3,30 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	jsoniter "github.com/json-iterator/go"
 	"github.com/someshkar/whois-api/lib"
-	"github.com/someshkar/whois-api/structs"
 )
 
 // MainHandler handles Whois info for a single domain
 func MainHandler(w http.ResponseWriter, r *http.Request) {
-
-	// Make sure it's a POST request
-	if r.Method != http.MethodPost {
+	// Make sure it's a GET request
+	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Fprintf(w, "Please only POST data here")
+		fmt.Fprintf(w, "Please use a GET request")
 		return
 	}
 
-	// Decode JSON body
-	decoder := jsoniter.NewDecoder(r.Body)
-	var body structs.SingleBody
-
-	err := decoder.Decode(&body)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	// Extract domain from URL path
+	path := strings.TrimPrefix(r.URL.Path, "/")
+	if path == "" {
+		http.Error(w, "Domain not specified", http.StatusBadRequest)
 		return
 	}
 
 	// Get Whois data
-	whois, err := lib.GetWhois(body.Domain)
+	whois, err := lib.GetWhois(path)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
