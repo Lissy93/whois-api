@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/someshkar/whois-api/lib"
+	"github.com/lissy93/who-dat/lib"
 )
 
 // MultiHandler handles Whois requests for multiple domains

@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/someshkar/whois-api/api"
+	"github.com/lissy93/who-dat/api"
 )
 
 func main() {

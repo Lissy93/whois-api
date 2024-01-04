@@ -1,4 +1,4 @@
-module github.com/someshkar/whois-api
+module github.com/lissy93/who-dat
 
 go 1.14
 
